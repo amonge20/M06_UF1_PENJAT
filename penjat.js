@@ -1,3 +1,4 @@
+//PARTE 1
 function Penjat() {
     let partidas = 0;
     let partidasGanadas = 0;
@@ -48,9 +49,9 @@ function Penjat() {
         if (intentos === 0) {
           console.log(`Has perdido. La palabra era: ${palabraSuelta}`);
           partidas++;
-          partidasPerdidas++;
-          // break; // El juego termina y regresamos al menú.
+          partidasPerdidas++; // El juego termina y regresamos al menú.
         }
+
       } else if (selecciona === '2') {
           console.log("Has seleccionado las estadísticas del juego");
           console.log(`Partidas jugadas en total: ${partidas}`);
@@ -64,4 +65,29 @@ function Penjat() {
           break; // Salir del juego.
         }
     }
+}
+
+//PARTE 2
+function nuevaPartida(){
+  //IMAGEN DEL AHORCADO
+
+  //LETRA OCULTA DEL AHORCADO
+
+  //ABECEDARIO DEL AHORCADO
+  abecedario = 'a b c d e f g h i j k l m o p q r s t u v w x y z';
+
+  document.getElementById("abecedario").innerHTML=abecedario;
+
+  
+  //LETRAS SELECCIONADAS EN EL AHORCADO
+
+  //CUANDO GANAS O PIERDES
+
+}
+function estadisticas(){
+  // let partidasTotales = 0;
+  // let partidasGanadas = 0;
+  // let partidasPerdidas = 0;
+
+  
 }
