@@ -31,6 +31,11 @@
                 color: white;
                 margin-left: 8%;
             }
+
+            #juegoColgao {
+                margin-top: 5%;
+                margin-right: -25%;
+            }
         </style>
     </head>
     <body>
@@ -38,7 +43,7 @@
         <button onclick="Penjat()">EL COLGADO POR CONSOLA</button>
         <!--PARTE 2-->
         <h1>EL COLGADO VERSION FINAL</h1>
-        <button class="botonIniciar" onclick="nuevaPartida()">Iniciar Partida</button>
+        <button class="botonIniciar" id="Iniciar" onclick="nuevaPartida()">Iniciar Partida</button>
         <button class="botonEstadisticas" onclick="estadisticas()">Estadisticas</button>
         <div id="juegoColgao"><!--<img src="img/penjat_0.png" id="personaColgada"/>--></div>
         <div id="palabraOculta"></div>

@@ -70,20 +70,48 @@ function Penjat() {
 //PARTE 2
 function nuevaPartida(){
   //IMAGEN DEL AHORCADO
+  // var personAhorcandose = getElementById("juegoColgao");
+  // personAhorcandose = ['']
+  // var img1 = new Image();
+  // var src1 = 'img/penjat_0';
+  // img1.src = src1
+
+  // var src2 = 'img/penjat_0';
+  // var src3 = 'img/penjat_0';
+  // var src4 = 'img/penjat_0';
+  // var src5 = 'img/penjat_0';
+  // var src6 = 'img/penjat_0';
+  // var src7 = 'img/penjat_0';
+  // var src8 = 'img/penjat_0';
+  // let intentos = 7;
 
   //LETRA OCULTA DEL AHORCADO
+  
 
-  //ABECEDARIO DEL AHORCADO
-  abecedario = 'a b c d e f g h i j k l m o p q r s t u v w x y z';
+  //INICIAR LA PARTIDA: ABECEDARIO DEL AHORCADO
+  const abecedario = 'abcdefghijklmopqrstuvwxyz';
 
-  document.getElementById("abecedario").innerHTML=abecedario;
+  document.getElementById("Iniciar").addEventListener("click", function() {
+    const abecedarioMostrar = abecedario.split('');
+    const abecedarioDividir = document.getElementById("abecedario");
+    abecedarioDividir.innerHTML= '';
 
+    abecedarioMostrar.forEach(lletra => {
+      const buto = document.createElement('button');
+      buto.textContent = lletra;
+      abecedarioDividir.appendChild(buto);
+    });
+  });
+  
   
   //LETRAS SELECCIONADAS EN EL AHORCADO
+  // let letrasCogidas = [];
 
   //CUANDO GANAS O PIERDES
 
 }
+
+//ESTADISTICAS (QUE GUARDE LAS PARTIDAS DEL AHORCADO)
 function estadisticas(){
   // let partidasTotales = 0;
   // let partidasGanadas = 0;
