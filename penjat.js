@@ -67,55 +67,102 @@ function Penjat() {
     }
 }
 
-//PARTE 2
-function nuevaPartida(){
-  //IMAGEN DEL AHORCADO
-  // var personAhorcandose = getElementById("juegoColgao");
-  // personAhorcandose = ['']
-  // var img1 = new Image();
-  // var src1 = 'img/penjat_0';
-  // img1.src = src1
+//PARTE 2: AHORCADO VERSION FINAL
+//ARRAY DE IMAGENES DEL AHORCADO
+const hangmanImages = [
+  "",
+  "img/penjat_0.png",
+  "img/penjat_1.png",
+  "img/penjat_2.png",
+  "img/penjat_3.png",
+  "img/penjat_4.png",
+  "img/penjat_5.png",
+  "img/penjat_6.png",
+  "img/penjat_7.png"
+];
 
-  // var src2 = 'img/penjat_0';
-  // var src3 = 'img/penjat_0';
-  // var src4 = 'img/penjat_0';
-  // var src5 = 'img/penjat_0';
-  // var src6 = 'img/penjat_0';
-  // var src7 = 'img/penjat_0';
-  // var src8 = 'img/penjat_0';
-  // let intentos = 7;
+// DATOS DEL AHORCADO
+let palabraOculta = [];
+let letrasUsadas = [];
+let intentos = 7; 
+let partidas = 0;
+let partidasGanadas = 0;
+let partidasPerdidas = 0;
+let hangmanImageIndex = 0; 
 
-  //LETRA OCULTA DEL AHORCADO
-  
+//ELEGIMOS LAS PALABRAS OCULTAS DEL AHORCADO
+const palabras = ["ordenador", "portatil", "teclado", "raton", "gaming", "javascript", "programacion"];
 
-  //INICIAR LA PARTIDA: ABECEDARIO DEL AHORCADO
-  const abecedario = 'abcdefghijklmopqrstuvwxyz';
+//INICIO DE LA PARTIDA
+function nuevaPartida() {
+  // Selecciona una palabra al azar
+  palabrAdivinar = palabras[Math.floor(Math.random() * palabras.length)];
 
-  document.getElementById("Iniciar").addEventListener("click", function() {
-    const abecedarioMostrar = abecedario.split('');
-    const abecedarioDividir = document.getElementById("abecedario");
-    abecedarioDividir.innerHTML= '';
+  palabraOculta = new Array(palabrAdivinar.length).fill("_");
+  letrasUsadas = [];
 
-    abecedarioMostrar.forEach(lletra => {
-      const buto = document.createElement('button');
-      buto.textContent = lletra;
-      abecedarioDividir.appendChild(buto);
+  // ABECEDARIO DEL AHORCADO
+  const abecedario = 'abcdefghijklmnopqrstuvwxyz';
+  const abecedarioMostrar = abecedario.split('');
+  const abecedarioDividir = document.getElementById("abecedario");
+  abecedarioDividir.innerHTML = '';
+
+  abecedarioMostrar.forEach(letra => {
+    const button = document.createElement('button');
+    button.textContent = letra;
+    button.addEventListener("click", function () {
+      lletrAdivinada(letra);
+      button.disabled = true;
     });
+    abecedarioDividir.appendChild(button);
   });
-  
-  
-  //LETRAS SELECCIONADAS EN EL AHORCADO
-  // let letrasCogidas = [];
 
-  //CUANDO GANAS O PIERDES
-
+  document.getElementById("letrasUsadas").textContent = "";
+  document.getElementById("palabraOculta").textContent = palabraOculta.join(" ");
+  intentos = 7;
+  hangmanImageIndex = 0; 
+  document.getElementById("personaColgada").style.display = "none";
+  document.getElementById("personaColgada").src = hangmanImages[hangmanImageIndex];
 }
 
-//ESTADISTICAS (QUE GUARDE LAS PARTIDAS DEL AHORCADO)
-function estadisticas(){
-  // let partidasTotales = 0;
-  // let partidasGanadas = 0;
-  // let partidasPerdidas = 0;
+function lletrAdivinada(letra) {
+  if (!letrasUsadas.includes(letra)) {
+    letrasUsadas.push(letra);
+    document.getElementById("letrasUsadas").textContent = "Letras usadas: " + letrasUsadas.join(", ");
 
-  
+    if (palabrAdivinar.includes(letra)) {
+      for (let i = 0; i < palabrAdivinar.length; i++) {
+        if (palabrAdivinar[i] === letra) {
+          palabraOculta[i] = letra;
+        }
+      }
+    } else {
+      intentos--;
+      // Change the hangman image
+      document.getElementById("personaColgada").style.display = "block";
+      if (hangmanImageIndex < hangmanImages.length - 1) {
+        hangmanImageIndex++;
+      }
+      document.getElementById("personaColgada").src = hangmanImages[hangmanImageIndex];
+    }
+
+    document.getElementById("palabraOculta").textContent = palabraOculta.join(" ");
+
+    if (intentos === 0) {
+      partidas++;
+      partidasPerdidas++;
+      alert("GAME OVER \n la palabra oculta era " + palabrAdivinar);
+      nuevaPartida();
+    } else if (!palabraOculta.includes("_")) {
+      partidas++;
+      partidasGanadas++;
+      alert("¡YOU WON! \n la palabra oculta era " + palabrAdivinar);
+      nuevaPartida();
+    }
+  }
+}
+
+// ESTADISTICAS (QUE GUARDE LAS PARTIDAS DEL AHORCADO)
+function estadisticas() {
+  alert(`Partidas Totales: ${partidas} \n Partidas Ganadas: ${partidasGanadas} \n Partidas Perdidas: ${partidasPerdidas}`);
 }
