@@ -68,7 +68,7 @@ function Penjat() {
 }
 
 //PARTE 2: AHORCADO VERSION FINAL
-//ARRAY DE IMAGENES DEL AHORCADO
+//ARRAY DE IMÁGENES DEL AHORCADO
 const hangmanImages = [
   "",
   "img/penjat_0.png",
@@ -82,13 +82,14 @@ const hangmanImages = [
 ];
 
 // DATOS DEL AHORCADO
+let palabrAdivinar = "";
 let palabraOculta = [];
 let letrasUsadas = [];
-let intentos = 7; 
+let intentos = 7;
 let partidas = 0;
 let partidasGanadas = 0;
 let partidasPerdidas = 0;
-let hangmanImageIndex = 0; 
+let hangmanImageIndex = 0;
 
 //ELEGIMOS LAS PALABRAS OCULTAS DEL AHORCADO
 const palabras = ["ordenador", "portatil", "teclado", "raton", "gaming", "javascript", "programacion"];
@@ -120,11 +121,12 @@ function nuevaPartida() {
   document.getElementById("letrasUsadas").textContent = "";
   document.getElementById("palabraOculta").textContent = palabraOculta.join(" ");
   intentos = 7;
-  hangmanImageIndex = 0; 
+  hangmanImageIndex = 0;
   document.getElementById("personaColgada").style.display = "none";
   document.getElementById("personaColgada").src = hangmanImages[hangmanImageIndex];
 }
 
+// Modificar la función lletrAdivinada
 function lletrAdivinada(letra) {
   if (!letrasUsadas.includes(letra)) {
     letrasUsadas.push(letra);
@@ -151,18 +153,33 @@ function lletrAdivinada(letra) {
     if (intentos === 0) {
       partidas++;
       partidasPerdidas++;
-      alert("GAME OVER \n la palabra oculta era " + palabrAdivinar);
-      nuevaPartida();
+      document.getElementById("palabraOculta").textContent = `Game Over. La palabra oculta era: ${palabrAdivinar}`;
+      setTimeout(() => {
+        nuevaPartida();
+      }, 2000); // Espera 2 segundos antes de iniciar una nueva partida
     } else if (!palabraOculta.includes("_")) {
       partidas++;
       partidasGanadas++;
-      alert("¡YOU WON! \n la palabra oculta era " + palabrAdivinar);
-      nuevaPartida();
+      const ultimaPalabraAdivinada = palabraOculta.join("");
+      document.getElementById("palabraOculta").textContent = `¡YOU WON! La palabra oculta era: ${ultimaPalabraAdivinada}`;
+      setTimeout(() => {
+        nuevaPartida();
+      }, 2000); // Espera 2 segundos antes de iniciar una nueva partida
     }
   }
 }
 
 // ESTADISTICAS (QUE GUARDE LAS PARTIDAS DEL AHORCADO)
 function estadisticas() {
-  alert(`Partidas Totales: ${partidas} \n Partidas Ganadas: ${partidasGanadas} \n Partidas Perdidas: ${partidasPerdidas}`);
+  const porcentajeGanadas = (partidasGanadas / partidas) * 100;
+  const porcentajePerdidas = (partidasPerdidas / partidas) * 100;
+
+  const porcentajeGanadasStr = porcentajeGanadas.toFixed(2);
+  const porcentajePerdidasStr = porcentajePerdidas.toFixed(2);
+
+  // Verifica si los porcentajes son números enteros (sin decimales)
+  const porcentajeGanadasMostrar = Number.isInteger(porcentajeGanadas) ? porcentajeGanadas.toFixed(0) : porcentajeGanadasStr;
+  const porcentajePerdidasMostrar = Number.isInteger(porcentajePerdidas) ? porcentajePerdidas.toFixed(0) : porcentajePerdidasStr;
+
+  alert(`Partidas Totales: ${partidas}\nPartidas Ganadas: ${partidasGanadas} (${porcentajeGanadasMostrar}%)\nPartidas Perdidas: ${partidasPerdidas} (${porcentajePerdidasMostrar}%)`);
 }
