@@ -54,9 +54,9 @@ function Penjat() {
 
       } else if (selecciona === '2') {
           console.log("Has seleccionado las estadísticas del juego");
-          console.log(`Partidas jugadas en total: ${partidas}`);
-          console.log(`Partidas ganadas: ${partidasGanadas}`);
-          console.log(`Partidas perdidas: ${partidasPerdidas}`);
+          console.log(`Total de partidas: ${partidas}`);
+          console.log(`Partidas ganadas (${Math.round((partidasGanadas / partidas) * 100)}%): ${partidasGanadas}`);
+          console.log(`Partidas perdidas (${Math.round((partidasPerdidas / partidas) * 100)}%): ${partidasPerdidas}`);
       } else if (selecciona === '3') {
           console.log("Chao Chao");
           break; // Salir del juego.
@@ -156,7 +156,7 @@ function lletrAdivinada(letra) {
       document.getElementById("palabraOculta").textContent = `Game Over. La palabra oculta era: ${palabrAdivinar}`;
       setTimeout(() => {
         nuevaPartida();
-      }, 2000); // Espera 2 segundos antes de iniciar una nueva partida
+      }, 2000); 
     } else if (!palabraOculta.includes("_")) {
       partidas++;
       partidasGanadas++;
@@ -164,7 +164,7 @@ function lletrAdivinada(letra) {
       document.getElementById("palabraOculta").textContent = `¡YOU WON! La palabra oculta era: ${ultimaPalabraAdivinada}`;
       setTimeout(() => {
         nuevaPartida();
-      }, 2000); // Espera 2 segundos antes de iniciar una nueva partida
+      }, 2000); 
     }
   }
 }
