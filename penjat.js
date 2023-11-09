@@ -181,5 +181,5 @@ function estadisticas() {
   const porcentajeGanadasMostrar = Number.isInteger(porcentajeGanadas) ? porcentajeGanadas.toFixed(0) : porcentajeGanadasStr;
   const porcentajePerdidasMostrar = Number.isInteger(porcentajePerdidas) ? porcentajePerdidas.toFixed(0) : porcentajePerdidasStr;
 
-  alert(`Partidas Totales: ${partidas}\nPartidas Ganadas: ${partidasGanadas} (${porcentajeGanadasMostrar}%)\nPartidas Perdidas: ${partidasPerdidas} (${porcentajePerdidasMostrar}%)`);
+  alert(`Partidas Totales: ${partidas}\nPartidas Ganadas (${porcentajeGanadasMostrar}%): ${partidasGanadas} \nPartidas Perdidas (${porcentajePerdidasMostrar}%): ${partidasPerdidas}`);
 }
