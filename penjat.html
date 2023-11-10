@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>ESTAS COLGAO?</title>
         <script src="penjat.js"></script>
+        <!--LOS ESTILOS PARA EL AHORCADO-->
         <style>
             h1 {
                 text-align: center;
@@ -18,7 +19,7 @@
                 text-align: center;
                 background-color: rgb(72, 138, 6);
                 color: white;
-                margin-left: 38%;
+                margin-left: 36%;
             }
 
             .botonEstadisticas{
@@ -49,33 +50,28 @@
                 text-align: center;
             }
 
-            #abecedario {
-                margin-left: 25%;
-            }
-
             #abecedario button {
                 margin-right: 8px; 
-                width: 25px;
-                height: 25px;
+                width: 35px;
+                height: 35px;
+                background-color: white;
             }
 
             #letrasUsadas {
                 font-size: 200%;
-                margin-bottom: 5%;
+                margin-top: 3%;
                 margin-left: 42%;
             }
         </style>
     </head>
     <body>
-        <!--PARTE 1-->
-        <button onclick="Penjat()">EL COLGADO POR CONSOLA</button>
         <!--PARTE 2-->
         <h1>EL COLGADO VERSION FINAL</h1>
         <button class="botonIniciar" id="Iniciar" onclick="nuevaPartida()">Iniciar Partida</button>
-        <button class="botonEstadisticas" onclick="estadisticas()">Estadisticas</button>
+        <button class="botonEstadisticas" onclick="estadisticas()">Estadisticas</button> 
         <div id="juegoColgao"><img src="" id="personaColgada"/></div>
         <div id="palabraOculta"></div>
-        <div id="abecedario"></div>
+        <div id="abecedario" style="display: flex;  justify-content: center;"></div>
         <div id="letrasUsadas"></div>
     </body>
 </html> 

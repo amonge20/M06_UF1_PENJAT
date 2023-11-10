@@ -1,73 +1,4 @@
-//PARTE 1
-function Penjat() {
-    let partidas = 0;
-    let partidasGanadas = 0;
-    let partidasPerdidas = 0;
-
-    while (true) {
-      let selecciona = prompt("Selecciona una de las opciones: \n 1. Iniciar un juego \n 2. Estadísticas \n 3. Salir \n");
-
-      if (selecciona === '1') {
-        console.log("Has seleccionado iniciar el juego...");
-        const palabras = ["portatil", "raton", "teclado", "ordenador", "programacion"];
-        const palabraSuelta = palabras[Math.floor(Math.random() * palabras.length)].toLowerCase();
-        const palabrAdivina = Array(palabraSuelta.length).fill('_');
-        const letraFalla = [];
-        let intentos = 6;
-
-        while (intentos > 0) {
-          console.log(`Palabra: ${palabrAdivina.join(' ')}`);
-          console.log(`Intentos restantes: ${intentos}`);
-          console.log(`Letras falladas: ${letraFalla.join(' ')}`);
-
-          const letra = prompt("Pon una letra: ").toLowerCase();
-
-          if (letra.length !== 1 || !letra.match(/[a-z]/)) {
-            console.log("Pon una letra válida: ");
-            continue;
-          }
-
-          if (palabraSuelta.includes(letra)) {
-            for (let i = 0; i < palabraSuelta.length; i++) {
-              if (palabraSuelta[i] === letra) {
-                palabrAdivina[i] = letra;
-              }
-            }
-          } else {
-            letraFalla.push(letra);
-            intentos--;
-          }
-
-          if (palabraSuelta === palabrAdivina.join('')) {
-            console.log(`¡Felicidades! Has adivinado la palabra: ${palabraSuelta}`);
-            partidas++;
-            partidasGanadas++;
-            break; // El juego termina y regresamos al menú.
-          }
-        }
-
-        if (intentos === 0) {
-          console.log(`Has perdido. La palabra era: ${palabraSuelta}`);
-          partidas++;
-          partidasPerdidas++; // El juego termina y regresamos al menú.
-        }
-
-      } else if (selecciona === '2') {
-          console.log("Has seleccionado las estadísticas del juego");
-          console.log(`Total de partidas: ${partidas}`);
-          console.log(`Partidas ganadas (${Math.round((partidasGanadas / partidas) * 100)}%): ${partidasGanadas}`);
-          console.log(`Partidas perdidas (${Math.round((partidasPerdidas / partidas) * 100)}%): ${partidasPerdidas}`);
-      } else if (selecciona === '3') {
-          console.log("Chao Chao");
-          break; // Salir del juego.
-      } else {
-          console.log("No has elegido ninguna de las opciones, cerrando programa");
-          break; // Salir del juego.
-        }
-    }
-}
-
-//PARTE 2: AHORCADO VERSION FINAL
+//AHORCADO VERSION FINAL
 //ARRAY DE IMÁGENES DEL AHORCADO
 const hangmanImages = [
   "",
@@ -91,23 +22,25 @@ let partidasGanadas = 0;
 let partidasPerdidas = 0;
 let hangmanImageIndex = 0;
 
-//ELEGIMOS LAS PALABRAS OCULTAS DEL AHORCADO
-const palabras = ["ordenador", "portatil", "teclado", "raton", "gaming", "javascript", "programacion"];
+//Una array de palabras ocultas del ahorcado
+const palabras = ["ORDENADOR", "PORTATIL", "TECLADO", "RATON", "GAMING", "JAVASCRIPT", "PROGRAMACION", "PHPYTHON", "OBJETOS"];
 
 //INICIO DE LA PARTIDA
 function nuevaPartida() {
-  // Selecciona una palabra al azar
+  // Selecciona una palabra al azar de la variable palabras
   palabrAdivinar = palabras[Math.floor(Math.random() * palabras.length)];
 
+  //Se convertira en rallas la palabra oculta
   palabraOculta = new Array(palabrAdivinar.length).fill("_");
   letrasUsadas = [];
 
-  // ABECEDARIO DEL AHORCADO
-  const abecedario = 'abcdefghijklmnopqrstuvwxyz';
+  //Abecedario del ahorcado
+  const abecedario = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const abecedarioMostrar = abecedario.split('');
   const abecedarioDividir = document.getElementById("abecedario");
   abecedarioDividir.innerHTML = '';
 
+  //Cada letra que se seleccione se ira desactivando
   abecedarioMostrar.forEach(letra => {
     const button = document.createElement('button');
     button.textContent = letra;
@@ -118,6 +51,8 @@ function nuevaPartida() {
     abecedarioDividir.appendChild(button);
   });
 
+  /*Se cogera las palabras que has usado y tambien se irán añadiendo a las palabras que vayas adivinando en la palabra oculta
+  Tambien se ira cambiando de imagen por el numero de intentos*/
   document.getElementById("letrasUsadas").textContent = "";
   document.getElementById("palabraOculta").textContent = palabraOculta.join(" ");
   intentos = 7;
@@ -126,21 +61,23 @@ function nuevaPartida() {
   document.getElementById("personaColgada").src = hangmanImages[hangmanImageIndex];
 }
 
-// Modificar la función lletrAdivinada
+//En la funcion "lletrAdivinada" se ira añadiendo las letras que has usado durante la partida del ahorcado
 function lletrAdivinada(letra) {
   if (!letrasUsadas.includes(letra)) {
     letrasUsadas.push(letra);
     document.getElementById("letrasUsadas").textContent = "Letras usadas: " + letrasUsadas.join(", ");
 
+    //Esa palabra que has seleccionado ira en la palabra oculta y se añadira en el texto de "letras usadas"
     if (palabrAdivinar.includes(letra)) {
       for (let i = 0; i < palabrAdivinar.length; i++) {
         if (palabrAdivinar[i] === letra) {
           palabraOculta[i] = letra;
         }
       }
+      //O sino te ira quitando intentos 
     } else {
       intentos--;
-      // Change the hangman image
+      //Imagen dela persona ahorcada
       document.getElementById("personaColgada").style.display = "block";
       if (hangmanImageIndex < hangmanImages.length - 1) {
         hangmanImageIndex++;
@@ -150,26 +87,22 @@ function lletrAdivinada(letra) {
 
     document.getElementById("palabraOculta").textContent = palabraOculta.join(" ");
 
+    //Si el numero de intentos llega a 0, se acabo la partida y empezara una de nueva (Luego se añadira como partida jugada en estadisticas)
     if (intentos === 0) {
       partidas++;
       partidasPerdidas++;
       document.getElementById("palabraOculta").textContent = `Game Over. La palabra oculta era: ${palabrAdivinar}`;
-      setTimeout(() => {
-        nuevaPartida();
-      }, 2000); 
+      //Si se acierta se mostrara la palabra adivinada y empezara una de nueva (Luego se añadira como partida jugada en estadisticas)
     } else if (!palabraOculta.includes("_")) {
       partidas++;
       partidasGanadas++;
       const ultimaPalabraAdivinada = palabraOculta.join("");
       document.getElementById("palabraOculta").textContent = `¡YOU WON! La palabra oculta era: ${ultimaPalabraAdivinada}`;
-      setTimeout(() => {
-        nuevaPartida();
-      }, 2000); 
     }
   }
 }
 
-// ESTADISTICAS (QUE GUARDE LAS PARTIDAS DEL AHORCADO)
+// Estadisticas (Que guarde las partidas del ahorcado)
 function estadisticas() {
   const porcentajeGanadas = (partidasGanadas / partidas) * 100;
   const porcentajePerdidas = (partidasPerdidas / partidas) * 100;
