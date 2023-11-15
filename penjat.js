@@ -12,14 +12,21 @@ const hangmanImages = [
   "img/penjat_7.png"
 ];
 
+//UN CONST PARA QUE LAS PARTIDAS SE GUARDEN
+const ahorcadoPartidasGuardadas = JSON.parse(localStorage.getItem("ahorcadoGuardarDatos")) || {
+  partidas: 0,
+  partidasGanadas: 0,
+  partidasPerdidas: 0,
+};
+
 // DATOS DEL AHORCADO
 let palabrAdivinar = "";
 let palabraOculta = [];
 let letrasUsadas = [];
 let intentos = 7;
-let partidas = 0;
-let partidasGanadas = 0;
-let partidasPerdidas = 0;
+let partidas = ahorcadoPartidasGuardadas.partidas;
+let partidasGanadas = ahorcadoPartidasGuardadas.partidasGanadas;
+let partidasPerdidas = ahorcadoPartidasGuardadas.partidasPerdidas;
 let hangmanImageIndex = 0;
 
 //Una array de palabras ocultas del ahorcado
@@ -34,13 +41,13 @@ function nuevaPartida() {
   palabraOculta = new Array(palabrAdivinar.length).fill("_");
   letrasUsadas = [];
 
-  //Abecedario del ahorcado
+  //Abecedario del ahorcado y declaramos el DOM del abecedario
   const abecedario = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const abecedarioMostrar = abecedario.split('');
   const abecedarioDividir = document.getElementById("abecedario");
   abecedarioDividir.innerHTML = '';
 
-  //Cada letra que se seleccione se ira desactivando
+  //Cada letra que se seleccione clicando se ira desactivando
   abecedarioMostrar.forEach(letra => {
     const button = document.createElement('button');
     button.textContent = letra;
@@ -52,7 +59,7 @@ function nuevaPartida() {
   });
 
   /*Se cogera las palabras que has usado y tambien se irán añadiendo a las palabras que vayas adivinando en la palabra oculta
-  Tambien se ira cambiando de imagen por el numero de intentos*/
+  Tambien se ira cambiando de imagen por el numero de intentos (Se coge el DOM delas letras usadas, ocultas y imagenes de la persona ahorcada)*/
   document.getElementById("letrasUsadas").textContent = "";
   document.getElementById("palabraOculta").textContent = palabraOculta.join(" ");
   intentos = 7;
@@ -61,7 +68,7 @@ function nuevaPartida() {
   document.getElementById("personaColgada").src = hangmanImages[hangmanImageIndex];
 }
 
-//En la funcion "lletrAdivinada" se ira añadiendo las letras que has usado durante la partida del ahorcado
+//En la funcion "lletrAdivinada" se ira añadiendo las letras que has usado durante la partida del ahorcado (DOM de las letras usadas)
 function lletrAdivinada(letra) {
   if (!letrasUsadas.includes(letra)) {
     letrasUsadas.push(letra);
@@ -116,3 +123,25 @@ function estadisticas() {
 
   alert(`Partidas Totales: ${partidas}\nPartidas Ganadas (${porcentajeGanadasMostrar}%): ${partidasGanadas} \nPartidas Perdidas (${porcentajePerdidasMostrar}%): ${partidasPerdidas}`);
 }
+
+//Creamos una funcion en que elimine los datos del ahorcado
+function eliminarEstadisticas(){
+    localStorage.removeItem("ahorcadoPartidas");
+    partidas = 0,
+    partidasGanadas = 0,
+    partidasPerdidas = 0,
+    estadisticas();
+}
+
+//Declaramos el ID del boton de eliminar las estadisticas
+document.getElementById("botonEliminar").addEventListener("click", eliminarEstadisticas);
+
+//En el "addEventListener" hara que los datos que se hayan guardado pues se eliminaran
+window.addEventListener("beforeunload", function() {
+  const ahorcadoPartidas = [
+    partidas,
+    partidasGanadas,
+    partidasPerdidas
+  ];
+  localStorage.setItem("hangmanData", JSON.stringify(ahorcadoPartidas));
+});

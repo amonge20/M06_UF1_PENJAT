@@ -19,7 +19,7 @@
                 text-align: center;
                 background-color: rgb(72, 138, 6);
                 color: white;
-                margin-left: 37.8%;
+                margin-left: 28%;
             }
 
             .botonEstadisticas{
@@ -29,6 +29,17 @@
                 border: rgb(4, 139, 188);
                 text-align: center;
                 background-color: rgb(4, 139, 188);
+                color: white;
+                margin-left: 5%;
+            }
+
+            .botonEliminar{
+                font-size: 150%;
+                height: 40px;
+                border-radius: 8px;
+                border: red;
+                text-align: center;
+                background-color: red;
                 color: white;
                 margin-left: 5%;
             }
@@ -69,6 +80,7 @@
         <h1>EL COLGADO VERSION FINAL</h1>
         <button class="botonIniciar" id="Iniciar" onclick="nuevaPartida()">Iniciar Partida</button>
         <button class="botonEstadisticas" onclick="estadisticas()">Estadisticas</button> 
+        <button class="botonEliminar" id="botonEliminar" onclick="eliminarEstadisticas()">Eliminar Datos</button>
         <div id="juegoColgao"><img src="" id="personaColgada"/></div>
         <div id="palabraOculta"></div>
         <div id="abecedario" style="display: flex;  justify-content: center;"></div>
